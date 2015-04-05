@@ -1,0 +1,57 @@
+from Tkinter import *
+
+
+root = Tk()
+frame = Frame(root)
+frame.pack()
+
+
+# modify the window
+root.title("SEAL-IT")
+root.geometry("800x400")
+
+Label(root, 
+		 text="SEAL-IT",
+		 fg = "light green",
+		 bg = "dark green",
+		 font = "Helvetica 30 bold italic").pack(anchor=CENTER)
+
+
+bottomframe = Frame(root)
+bottomframe.pack()
+
+Label(root, 
+		 text="Images Supplied by CRESLI",
+		 fg = "white",
+		 bg = "dark blue",
+		 font = "Helvetica 10 bold").pack(side=LEFT, anchor=SW)
+
+Label(root, 
+		 text="Patent Pending",
+		 fg = "light blue",
+		 bg = "dark blue",
+		 font = "Helvetica 10 italic").pack(side=RIGHT, anchor=SE)
+#comparebutton
+comparebutton = Button(bottomframe, text="Compare", fg="black")
+comparebutton.pack(side= BOTTOM ,pady=10, anchor=N)
+
+
+#create frame in main window
+sealFrame = Frame(root, width=100, height=100)
+sealFrame.grid(row=3, column=2, padx=10, pady=2)
+
+
+#create label for frame
+firstLabel = Label(sealFrame)
+firstLabel.grid(row=0, column=0, padx=10, pady=2)
+
+#create image in frame
+
+imageEx = PhotoImage(file = 'seal2.gif')
+Label(sealFrame, image=imageEx).pack(side= TOP, anchor= CENTER)
+
+
+
+sealFrame.pack(anchor=CENTER)
+
+root.mainloop()

@@ -1,0 +1,56 @@
+from Tkinter import *
+from PIL import Image, ImageTk
+import sys
+
+class SlotMachine():
+    def __init__(self):
+        root = Tk()
+        root.title = ("Slot Machine")
+        self.canvas = Canvas(root, width=1200, height=800)
+        self.canvas.grid(column=0,row=0)
+        button = Button(root, text="Spin!", width=20, command = self.spin)
+        button.grid(column=0,row=1)
+
+        self.alive = True
+        root.protocol("WM_DELETE_WINDOW", self.die)
+        root.mainloop()
+
+    def spin(self):
+
+        im = Image.open("colors.png")
+        wheelw = im.size[0] #width of source image
+        wheelh = im.size[1] #height of source image
+        showsize = 400 # amount of source image to show at a time -
+                       # part of 'wheel' you can see
+        speed = 3 #spin speed of wheel
+        bx1 = 250 #Box 1 x - where the box will appear on the canvas
+        by = 250 #box 1 y
+        numberofspins = 100  #spin a few times through before stopping
+        cycle_period = 3  #amount of pause between each frame
+
+        tk_im1 = ImageTk.PhotoImage(im)
+        tk_im2 = ImageTk.PhotoImage(im)
+        im1id = self.canvas.create_image(bx1, by + showsize, image=tk_im1)
+        im2id = self.canvas.create_image(bx1, by + showsize + wheelh, 
+                                         image=tk_im2)
+
+        for spintimes in range(1,numberofspins):
+            for y in range(wheelh,0,-speed): 
+                if self.alive:
+
+                    self.canvas.move(im1id, 0, -speed)
+                    self.canvas.move(im2id, 0, -speed)
+
+                    self.canvas.update() 
+                    self.canvas.after(cycle_period)
+                else:
+                    sys.exit()
+
+            self.canvas.move(im1id, 0, wheelh)
+            self.canvas.move(im2id, 0, wheelh)
+
+    def die(self):
+        self.alive = False
+
+if __name__ == '__main__':
+    mySlotMachine = SlotMachine()
